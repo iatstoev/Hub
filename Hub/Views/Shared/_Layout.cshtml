@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title Hub</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+<body>
+    @Scripts.Render("~/bundles/jquery")
+
+
+    <div id="hubHeader" style="height:10vh; width:100vw; padding-left:20px; background-color:ghostwhite; border-bottom:1px solid lightsteelblue;">
+
+        <div id="hubHeaderAreaLeft" style="display:inline-block; vertical-align:top; border-right:0.5vh solid lightsteelblue; height:10vh; width:20vw">
+
+            <div style="display:block; width:20vw; height:5vh">   
+            </div>
+
+            <div style="display:block;  width:20vw; height:5vh;">
+                <select id="selectAreaId" class="hubSelect">
+                    <option disabled selected> Select an area </option>
+                    <option value="1">
+                        Note Sections
+                    </option>
+                    <option value="2">
+                        Financial
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div id="hubHeaderAreaRight" style="display:inline-block; height:10vh; width:77vw">
+        </div>
+    </div>
+
+
+    <div id="hubContent" style="background-color:ghostwhite; padding-left:20px;">
+        <div id="hubNavigationArea" style="display:inline-block; vertical-align:top; width:20vw; height:80vh; overflow:auto; border-right:0.5vh solid lightsteelblue">
+
+        </div>
+        <div id="hubContentArea" style="display:inline-block; vertical-align:top;  width:77vw; height:80vh; overflow-x:no-display; overflow-y:auto">
+            @RenderBody()
+        </div>
+    </div>
+
+    <div id="hubFooter" style="display:block; width:100vw; height:5vh;border-top:1px solid lightsteelblue; background-color:ghostwhite;">
+        @if (IsSectionDefined("Footer"))
+        {
+            RenderSection("Footer");
+        }
+        else
+        {
+            <p>Footer</p>
+        }
+    </div>
+
+
+        <script type="text/javascript">
+            $('#selectAreaId').on('change', function (event) {
+                $('#hubNavigationArea').html('');
+                $('#hubContentArea').html('');
+
+                //TODO
+                //1. initial tree initialization!
+                //2. the right click when the context menu is not available should function as a normal right click
+                //if a tree has a context menu and the listener is added than the listener must be disabled if there is no context menu
+
+                var obj = $('#selectAreaId');
+
+                if (obj.val() == 1) {
+
+                    var url = '@Url.Action("InitializeTree", "SectionTree")';
+                    var urlContextData = '@Url.Action("ContextMenuUrls", "SectionTree")'
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        success: function (data, textStatus) {
+
+                            initializeTree(data, 'hubNavigationArea', 'hubContentArea', urlContextData);
+                        }
+                    });
+                }
+                else if (obj.val() == 2) {
+
+                    var url = '@Url.Action("InitializeTree", "FinanceTree")';
+                    var urlContextData = '@Url.Action("ContextMenuUrls", "FinanceTree")'
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        success: function (data, textStatus) {
+
+                            initializeTree(data, 'hubNavigationArea', 'hubContentArea', null);
+                        }
+                    });
+                }
+            });
+
+            $body = $("body");
+
+            $(document).on({
+                ajaxStart: function () { $body.addClass("loading"); },
+                ajaxStop: function () { $body.removeClass("loading"); }
+            });
+
+    </script>
+
+    
+    @Scripts.Render("~/Scripts/HubTree.js")
+    @RenderSection("scripts", required: false)
+    <div class="modal"><!-- Place at bottom of page --></div>
+
+</body>
+</html>

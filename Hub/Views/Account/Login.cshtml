@@ -1,0 +1,50 @@
+﻿@model Hub.Models.LoginModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body style="background-color:ghostwhite;">
+
+    
+
+    <div style="display:inline-block; width:100vw; height:40vh;">
+        
+    </div>
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { style = "width:100%; height:100%" }))
+{
+
+    <div style="display:inline-block; text-align:right; vertical-align:top; width:50vw;">
+        @Html.LabelFor(m => m.UserName, new { style = "display:inline-block; text-align:left; width:80px;" })
+    </div>
+    <div style="display:inline-block; text-align:left; vertical-align:top; margin-bottom:5px; width:45vw;">
+        @Html.TextBoxFor(m => m.UserName)
+        <span style="color:red">@Html.ValidationMessageFor(m => m.UserName)</span>
+    </div>
+
+    <div style="display:inline-block; text-align:right; vertical-align:top; width:50vw;">
+        @Html.LabelFor(m => m.Password, new { style = "display:inline-block; text-align:left; width:80px;" })
+    </div>
+    <div style="display:inline-block; text-align:left; vertical-align:top; margin-bottom:5px; width:45vw;">
+        @Html.PasswordFor(m => m.Password)
+        <span style="color:red">@Html.ValidationMessageFor(m => m.Password)</span>
+    </div>
+
+    <div style="display:inline-block; text-align:right; vertical-align:top; width:50vw;">
+        @Html.AntiForgeryToken()
+    </div>
+    <div style="display:inline-block; text-align:left; vertical-align:top; width:45vw;">
+        <input type="submit" name="Login" value="Login" />
+    </div>
+}
+
+</body>
+</html>

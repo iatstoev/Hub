@@ -1,0 +1,120 @@
+﻿ 
+.hubHeaderRow {
+     height:50px;
+     text-align:center;
+     padding-top:12px;
+     border-bottom:solid;
+     border-bottom-color:whitesmoke;
+     border-bottom-width:5px;
+ }
+
+
+.hubNavigationColumn {
+     padding-top:10px;
+     padding-left:0px;
+     border-right:solid;
+     border-right-color:whitesmoke;
+     border-right-width:5px;
+     height:800px;
+ }
+
+.hubHeaderColumn {
+    height:30px;
+}
+
+ .hubSectionContent{
+    padding-top:1%;
+ }
+
+ .hubFooterRow {
+     height:30px;
+ }
+
+ .hubHeaderAlign {
+     height:30px;
+     text-align:center;
+     padding-top:5px;
+ }
+
+ .hubSelect
+ {
+    height:5vh;
+    width:100%;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    text-align:center;
+    background-color:lightsteelblue;
+ }
+
+ .hubButton {
+    background-color:dodgerblue;
+    color:white;
+ }
+
+
+ .hubLinkButton {
+      text-decoration: none;
+      background-color: lightsteelblue;
+      color:black;
+      padding: 7px;
+      border-top: 1px solid #CCCCCC;
+      border-right: 1px solid #333333;
+      border-bottom: 1px solid #333333;
+      border-left: 1px solid #CCCCCC;
+ }
+
+
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba(255, 255, 255, 0.00)
+                url('http://i.stack.imgur.com/FhHRx.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+/*body.loading {
+    overflow: hidden;   
+}*/
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
+}
+
+
+.context-menu {
+    position:absolute;
+    z-index:10;
+    display:none;
+     margin: 0;
+    border-radius:4px;
+    -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    cursor:pointer;
+    text-align:left;
+    background-color:dodgerblue;
+   
+}
+
+
+
+
+
+

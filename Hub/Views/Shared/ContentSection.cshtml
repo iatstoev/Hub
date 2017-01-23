@@ -1,0 +1,87 @@
+﻿@model ContentSectionModel
+
+<div id="displayEditContent" style="display:block; height:auto; overflow:hidden; height:100%; width:100%;">
+    <div style="display:block; height:3%; margin-top:1%; margin-bottom:30px;">
+            @if (Model.Action == ContentSectionAction.DISPLAY)
+            {
+                <a id="hubEditSectionContent" style="display:inline-flex" href='' class="hubLinkButton">Edit</a>
+            }
+            else if (Model.Action == ContentSectionAction.EDIT)
+            {
+                <span>
+                    <a id="hubSaveSectionContent" style="display:inline-flex" href='' class="hubLinkButton">Save</a>
+                </span>
+                <span>
+                    <a id="hubCancelEditSectionContent" style="display:inline-flex" href='' class="hubLinkButton">Cancel</a>
+                </span>
+            }
+    </div>
+    <div style="display:block; height:90%; margin-top:1%;">
+        @if (Model.Action == ContentSectionAction.DISPLAY)
+        {
+            <pre style="width:95%; margin-left:3%; border:1px solid lightsteelblue; overflow:auto; height:100%;">@Html.Raw(Model.HtmlContent)</pre>
+        }
+        else if (Model.Action == ContentSectionAction.EDIT)
+        {
+            @Html.TextArea("HtmlContent", Model.HtmlContent, new {style = "width:95%; height:100%; margin-left:3%; background-color:white;" })
+        }
+    </div>
+</div>
+
+@if (Model.Action == ContentSectionAction.DISPLAY)
+{
+    <script type="text/javascript">
+        $(function () {
+            $('a#hubEditSectionContent').click(function (evt) {
+                $.ajax({
+                    type:"GET",
+                    url: '@Url.Action("EditContentSection", "Section")',
+                    data: {
+                        nodeId: @Model.SectionId
+                    },
+                    success: function (data, textStatus) {
+                        $('#displayEditContent').replaceWith(data);
+                    }
+                });
+                evt.preventDefault();
+            });
+        });
+    </script>
+}
+
+@if (Model.Action == ContentSectionAction.EDIT)
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $('a#hubSaveSectionContent').click(function (evt) {
+                $.ajax({
+                    type:"POST",
+                    url: '@Url.Action("SaveContentSection", "Section")',
+                    data: {
+                        SectionId: @Model.SectionId,
+                        HtmlContent: $('#HtmlContent').val()
+                    },
+                    success: function (data, textStatus) {
+                        $('#displayEditContent').replaceWith(data);
+                    }
+                });
+                evt.preventDefault();
+            });
+
+            $('a#hubCancelEditSectionContent').click(function (evt) {
+                $.ajax({
+                    type:"GET",
+                    url: '@Url.Action("DisplayContentSection", "Section")',
+                    data: {
+                        nodeId: @Model.SectionId
+                    },
+                    success: function (data, textStatus) {
+                        $('#displayEditContent').replaceWith(data);
+                    }
+                });
+                evt.preventDefault();
+            });
+        });
+    </script>
+}
